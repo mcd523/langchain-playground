@@ -4,15 +4,15 @@ A Spring Boot application demonstrating Retrieval-Augmented Generation (RAG) usi
 
 ## Features
 
-- **Basic Chat**: Traditional chat interface powered by Ollama
-- **RAG Chat**: Enhanced chat with document retrieval capabilities
+- **RAG Chat**: Enhanced chat interface powered by Ollama with document retrieval capabilities
 - **Document Ingestion**: Support for both file and text ingestion
 - **Vector Embeddings**: Uses BGE Small EN v1.5 embedding model
 - **In-Memory Vector Store**: For development and testing
+- **Semi-Persistent Conversations**: Maintains context across interactions through provided ID's
 
 ## Prerequisites
 
-- Java 17+
+- Java 21+
 - Kotlin
 - Ollama running locally with llama3.2 model
 - Gradle
@@ -40,24 +40,14 @@ A Spring Boot application demonstrating Retrieval-Augmented Generation (RAG) usi
 
 ## API Endpoints
 
-### Basic Chat
+### Chat
 ```http
 POST /chat
 Content-Type: application/json
 
 {
+  "id": "Your ID (or null)",
   "message": "Your question here"
-}
-```
-
-### RAG Chat
-```http
-POST /chat/rag
-Content-Type: application/json
-
-{
-  "message": "Your question here",
-  "useRAG": true
 }
 ```
 
@@ -65,7 +55,7 @@ Content-Type: application/json
 
 #### Ingest Text
 ```http
-POST /chat/documents/ingest-text
+POST /documents/ingest-text
 Content-Type: application/json
 
 {
@@ -79,17 +69,12 @@ Content-Type: application/json
 
 #### Ingest File
 ```http
-POST /chat/documents/ingest
+POST /documents/ingest
 Content-Type: application/json
 
 {
   "filePath": "/path/to/your/document.pdf"
 }
-```
-
-#### Get Document Information
-```http
-GET /chat/documents/info
 ```
 
 ## How It Works
@@ -134,12 +119,15 @@ rag.max-results=5
      "useRAG": true
    }
    ```
+   
+For more examples, check out [chat.http](chat.http).
 
 ## Architecture
 
 - **DocumentService**: Handles document ingestion and vector storage
-- **RAGService**: Orchestrates retrieval and generation
+- **ChatService**: Orchestrates conversation flow
 - **Assistant**: LangChain4j AI service interface
+- **AssistantFactory**: Manages AI service instances
 - **ChatController**: REST API endpoints
 
 ## Dependencies
