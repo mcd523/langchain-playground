@@ -5,6 +5,7 @@ import dev.langchain4j.model.chat.ChatModel
 import dev.langchain4j.rag.content.retriever.ContentRetriever
 import dev.langchain4j.service.AiServices
 import org.springframework.stereotype.Component
+import java.util.UUID
 
 @Component
 class AssistantFactory(
@@ -13,7 +14,7 @@ class AssistantFactory(
     private val contentRetriever: ContentRetriever
 ) {
 
-    fun fromChat(chatId: String): Assistant {
+    fun fromChat(chatId: UUID): Assistant {
         return AiServices.builder(Assistant::class.java)
             .chatModel(chatModel)
             .chatMemory(chatStore.getChatMemory(chatId))

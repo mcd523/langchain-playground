@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.*
 class ChatController(
     private val chatService: ChatService
 ) {
-
-    
     @PostMapping
     fun chat(@RequestBody body: ChatRequest): ChatResponse {
         return chatService.chat(body.id, body.message)

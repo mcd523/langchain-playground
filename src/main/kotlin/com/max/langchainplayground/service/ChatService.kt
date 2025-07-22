@@ -9,9 +9,8 @@ import java.util.UUID
 class ChatService(
     private val assistantFactory: AssistantFactory
 ) {
-    
-    fun chat(chatId: String?, userMessage: String): ChatResponse {
-        val id = chatId ?: UUID.randomUUID().toString()
+    fun chat(chatId: UUID?, userMessage: String): ChatResponse {
+        val id = chatId ?: UUID.randomUUID()
         val assistant = assistantFactory.fromChat(id)
 
         return ChatResponse(
