@@ -1,0 +1,35 @@
+### RAG Chat
+POST http://localhost:8080/chat
+Content-Type: application/json
+
+{
+  "message": "What information do you have about Acme Corporation?"
+}
+
+### Ingest Text Document
+POST http://localhost:8080/documents/ingest-text
+Content-Type: application/json
+
+{
+  "text": "Acme Corporation is a leading technology company founded in 2010. The company specializes in artificial intelligence and machine learning solutions. Our headquarters are located in San Francisco, California. We have over 500 employees worldwide and serve clients in more than 30 countries. Our main products include AI-powered analytics platforms, automated customer service solutions, and predictive modeling tools.",
+  "metadata": {
+    "source": "company_info",
+    "type": "overview"
+  }
+}
+
+### Ingest File Document (replace with actual file path)
+POST http://localhost:8080/documents/ingest
+Content-Type: application/json
+
+{
+  "filePath": "/path/to/your/document.pdf"
+}
+
+### RAG Chat after ingesting documents
+POST http://localhost:8080/chat
+Content-Type: application/json
+
+{
+  "message": "What information do you have about Acme Corporation?"
+}
